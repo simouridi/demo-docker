@@ -59,18 +59,18 @@ class RoleServiceImplTest {
         Assertions.assertEquals("TEST", target.getRoleName());
     }
 
-//    @Test
-//    @DisplayName("Testing ")
-//    void updateRoleTest() {
-//    }
-//
-//    @Test
-//    @DisplayName("Testing ")
-//    void deleteRoleTest() {
-//    }
-//
-//    @Test
-//    @DisplayName("Testing ")
-//    void getRoleListTest() {
-//    }
+    @Test
+    @DisplayName("Testing ")
+    void updateRoleTest() {
+    }
+
+    @Test
+    @DisplayName("Testing ")
+    void deleteRoleTest() {
+    }
+
+    @Test
+    @DisplayName("Testing ")
+    void getRoleListTest() {
+    }
 }
