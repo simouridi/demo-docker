@@ -51,6 +51,7 @@ class RoleServiceImplTest {
     @Test
     @DisplayName("Testing getRoleByRoleName")
     void getRoleByRoleNameTest() {
+        
         Role roleResponse = Role.builder().roleId(1L).roleName("TEST").build();
         Mockito.when(roleRepository.findByRoleName(any(String.class))).thenReturn(Optional.of(roleResponse));
         Role target = roleService.getRoleByRoleName("Test");
