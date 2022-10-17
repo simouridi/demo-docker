@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.minty</groupId>
 	<artifactId>demo-docker</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>demo-docker</name>
+	<version>0.0.2-SNAPSHOT</version>
+	<name>demo docker app</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>11</java.version>
@@ -55,7 +55,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>${project.parent.version}</version>
 				<configuration>
-					<finalName>demo-docker</finalName>
+					<finalName>${project.artifactId}</finalName>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

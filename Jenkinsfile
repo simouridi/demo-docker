@@ -1,27 +1,51 @@
-node {
-    def WORKSPACE = "/var/lib/jenkins/workspace/demo-docker"
-    def dockerImageTag = "demo-docker${env.BUILD_NUMBER}"
+pipeline {
+    agent any
+    environment {
+        DATE = new Date().format('dd-MM-yyyy')
+        TAG = "${DATE}.${BUILD_NUMBER}"
+        registry = "simouridi/demo-docker"
+        registryCredential = 'docker-credentials'
+        dockerImage = ''
+    }
 
-    try{
-        stage('Clone repo'){
-            git url: 'https://github.com/simouridi/demo-docker.git',
-                credentialsId: 'springdocker-user',
-                branch: 'dev'
+    stages {
+        stage('Clone repo') {
+            steps {
+                git branch: 'main', credentialsId: 'github-token', url: 'https://github.com/simouridi/demo-docker.git'
+                sh "git checkout main"
+            }
         }
 
-        stage('Build docker'){
-            // build maven
-            // sh "sudo mvn clean install"
-            // sh "sudo mvn run build"
-            dockerImage = docker.build("demo-docker:${env.BUILD_NUMBER}")
+        stage('Maven Build') {
+            steps {
+                sh 'mvn clean install -DskipTests'
+            }
         }
 
-        stage('Deploy docker'){
-            echo "Docker Image Tag Name: ${dockerImageTag}"
-            sh "docker stop demo-docker || true && docker rm demo-docker || true"
-            sh "docker run --name demo-docker -d -p 8080:8080 demo-docker:${env.BUILD_NUMBER}"
+        stage('Unit Test') {
+            steps {
+                sh 'mvn clean package'
+                junit '**/target/surefire-reports/TEST-*.xml'
+            }
+
         }
-    }catch(e){
-        throw e
+
+        stage('Docker Build image') {
+            steps {
+                script {
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+            }
+        }
+
+        stage('pushing docker image to dockerhub') {
+            steps {
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
     }
 }

@@ -40,7 +40,7 @@ services:
     depends_on:
       mysqldb:
         condition: service_healthy
-    image: demo-docker:latest
+    image: demo-docker
     restart: always
     ports:
     - 8080:8080
