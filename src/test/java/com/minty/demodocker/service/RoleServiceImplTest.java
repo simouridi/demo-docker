@@ -24,7 +24,6 @@ class RoleServiceImplTest {
     @InjectMocks
     private RoleService roleService = new RoleServiceImpl(roleRepository);
 
-
     @Test
     @DisplayName("Testing addRole")
     void addRoleTest() {
@@ -74,4 +73,6 @@ class RoleServiceImplTest {
     @DisplayName("Testing ")
     void getRoleListTest() {
     }
+
+    
 }
